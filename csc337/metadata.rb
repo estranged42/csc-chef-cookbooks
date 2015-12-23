@@ -1,0 +1,5 @@
+name             'csc337'
+maintainer       'Mark Fischer - fischerm@email.arizona.edu'
+description      'Chef Cookbook for CSC 337 OpsWorks'
+license          'See LICENSE.txt file at top of distribution.'
+version          '1.0.0'
