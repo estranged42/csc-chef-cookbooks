@@ -62,12 +62,12 @@ end
 execute "Creating html sym link" do
   cwd "/home/" + netid
   command "ln -s /var/www/html html"
-  not_if { ::File.directory?("/home/" + netid + "/html") }
+  not_if { ::File.exists?("/home/" + netid + "/html") }
 end
 
 # Create a placeholder index.html page
 template "/var/www/html/index.php" do
-  not_if { ::File.directory?("/var/www/html/index.php") }
+  not_if { ::File.exists?("/var/www/html/index.php") }
   variables( :username => netid )
   source "index.php.erb"
   owner netid
