@@ -23,6 +23,12 @@ package 'php56' do
   action :install
 end
 
+# Start apache service
+service 'httpd' do
+  action :start
+end
+
+# Grab the instance data for this instance from OpsWorks
 instance = search("aws_opsworks_instance", "self:true").first
 
 # Assume instance is named for the netid of the user
@@ -58,4 +64,12 @@ execute "Creating html sym link" do
   command "ln -s /var/www/html html"
 end
 
+# Create a placeholder index.html page
+template "/var/www/html/index.php" do
+  variables( :username => netid )
+  source "index.php.erb"
+  owner netid
+  group netid
+  mode 0644
+end
 
