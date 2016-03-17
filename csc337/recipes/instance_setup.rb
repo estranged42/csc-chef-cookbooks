@@ -23,10 +23,43 @@ package 'php56' do
   action :install
 end
 
+# MySQL
+package 'mysql-server' do
+  action :install
+end
+
+package 'php56-pdo' do
+  action :install
+end
+
+package 'php56-mysqlnd' do
+  action :install
+end
+
 # Start apache service
 service 'httpd' do
   action :start
 end
+
+# Change permissions of the httpd logs directory
+directory '/var/log/httpd' do
+  mode '0755'
+  action :update
+end
+
+# Start mysql service
+service 'mysqld' do
+  action :start
+end
+
+# Grant privileges to localhost user
+bash "mysql-grant-privs" do
+    user "root"
+    code <<-EOH
+     mysql -u root -e "GRANT ALL PRIVILEGES ON *.* TO ''@'localhost'"
+    EOH
+end
+
 
 # Grab the instance data for this instance from OpsWorks
 instance = search("aws_opsworks_instance", "self:true").first
