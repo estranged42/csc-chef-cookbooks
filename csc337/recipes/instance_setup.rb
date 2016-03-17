@@ -44,7 +44,6 @@ end
 # Change permissions of the httpd logs directory
 directory '/var/log/httpd' do
   mode '0755'
-  action :update
 end
 
 # Start mysql service
