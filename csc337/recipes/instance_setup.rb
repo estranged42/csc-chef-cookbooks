@@ -109,7 +109,7 @@ end
 
 execute "Creating sym link to logs" do
   cwd "/home/" + netid
-  command "ln -s /var/log/httpd html"
+  command "ln -s /var/log/httpd logs"
   not_if { ::File.exists?("/home/" + netid + "/logs") }
 end
 
