@@ -23,6 +23,16 @@ package 'php56' do
   action :install
 end
 
+execute "Enable display errors by default" do
+  cwd "/etc/"
+  command "sed -i.bak -e 's/display_errors = Off/display_errors = On/' php.ini"
+end
+
+execute "Set timezone in php.ini" do
+  cwd "/etc/"
+  command "echo 'date.timezone = \"America/Phoenix\"' >> php.ini"
+end
+
 # MySQL
 package 'mysql-server' do
   action :install
@@ -52,7 +62,7 @@ service 'mysqld' do
 end
 
 # Grant privileges to localhost user
-bash "mysql-grant-privs" do
+bash "Grant MySQL Privs to localhost user" do
     user "root"
     code <<-EOH
      mysql -u root -e "GRANT ALL PRIVILEGES ON *.* TO ''@'localhost'"
