@@ -92,6 +92,14 @@ user netid do
   shell '/bin/bash'
 end
 
+# Create Home directory
+directory '/home/' + netid do
+  owner netid
+  group netid
+  mode '0755'
+  action :create
+end
+
 # Change ownership of the default web directory
 directory '/var/www/html' do
   owner netid
